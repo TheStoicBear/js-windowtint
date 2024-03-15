@@ -1,3 +1,7 @@
+
+Go to `ox_inventory/data/items.lua`
+Add this to the bottom.
+```lua
 ['tint_meter'] = {
     label = 'Tint Meter',
     weight = 1000,  -- Adjust weight as needed
@@ -7,4 +11,5 @@
     client = {
         export = 'js-windowtint.tintmeter:useItem'
     }
-},
+}
+```
