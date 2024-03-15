@@ -6,10 +6,6 @@ client_scripts {
 	'cl_windowstint.lua'
 }
 
-server_scripts {
-	's_windowtint.lua'
-}
-
 shared_scripts {
     '@ox_lib/init.lua',
 }
