@@ -1,14 +1,15 @@
-local ESX = exports["es_extended"]:getSharedObject()
-
-local tint = nil
-
 RegisterNetEvent('tintmeter:useItem', function()
-    local vehicle, distance = ESX.Game.GetClosestVehicle()
     local playerPed = PlayerPedId()
-    if vehicle and distance <= 2 then
+    local playerCoords = GetEntityCoords(playerPed)
+    local vehicle, vehicleCoords = lib.getClosestVehicle(playerCoords, 2.0, false)
+    
+    if vehicle then
         ExecuteCommand("me Attaching tint meter to the window")
         RequestAnimDict('weapons@first_person@aim_rng@generic@projectile@sticky_bomb@')
-        while not HasAnimDictLoaded('weapons@first_person@aim_rng@generic@projectile@sticky_bomb@') do Citizen.Wait(100) end
+        while not HasAnimDictLoaded('weapons@first_person@aim_rng@generic@projectile@sticky_bomb@') do
+            Citizen.Wait(100)
+        end
+        
         if lib.progressBar({
             duration = 2000,
             label = 'Attaching tint meter to the window',
@@ -24,27 +25,29 @@ RegisterNetEvent('tintmeter:useItem', function()
         }) then
             Citizen.Wait(2000)
             ExecuteCommand("do Device measuring window transparency")
+            
             if lib.progressBar({
                 duration = 10000,
                 label = 'Measuring window transparency',
                 useWhileDead = false,
                 canCancel = true,
             }) then
-                if GetVehicleWindowTint(vehicle) == -1  then
+                local tintLevel = GetVehicleWindowTint(vehicle)
+                if tintLevel == -1 then
                     ExecuteCommand('do This vehicle has basic window tint')
-                elseif GetVehicleWindowTint(vehicle) == 0 then
+                elseif tintLevel == 0 then
                     ExecuteCommand('do This vehicle has no window tint')
-                elseif GetVehicleWindowTint(vehicle) == 1 then
+                elseif tintLevel == 1 then
                     ExecuteCommand('do This vehicle has window tint: Pure Black')
-                elseif GetVehicleWindowTint(vehicle) == 2 then
+                elseif tintLevel == 2 then
                     ExecuteCommand('do This vehicle has window tint: Dark Smoke')
-                elseif GetVehicleWindowTint(vehicle) == 3 then
+                elseif tintLevel == 3 then
                     ExecuteCommand('do This vehicle has window tint: Light Smoke')
-                elseif GetVehicleWindowTint(vehicle) == 4 then
+                elseif tintLevel == 4 then
                     ExecuteCommand('do This vehicle has basic window tint')
-                elseif GetVehicleWindowTint(vehicle) == 5 then
+                elseif tintLevel == 5 then
                     ExecuteCommand('do This vehicle has window tint: Limo')
-                elseif GetVehicleWindowTint(vehicle) == 6 then
+                elseif tintLevel == 6 then
                     ExecuteCommand('do This vehicle has window tint: Green')
                 end
             end
