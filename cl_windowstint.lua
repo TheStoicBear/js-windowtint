@@ -1,15 +1,15 @@
-RegisterNetEvent('tintmeter:useItem', function()
+function UseTintMeter()
     local playerPed = PlayerPedId()
     local playerCoords = GetEntityCoords(playerPed)
     local vehicle, vehicleCoords = lib.getClosestVehicle(playerCoords, 2.0, false)
-    
+
     if vehicle then
         ExecuteCommand("me Attaching tint meter to the window")
         RequestAnimDict('weapons@first_person@aim_rng@generic@projectile@sticky_bomb@')
         while not HasAnimDictLoaded('weapons@first_person@aim_rng@generic@projectile@sticky_bomb@') do
             Citizen.Wait(100)
         end
-        
+
         if lib.progressBar({
             duration = 2000,
             label = 'Attaching tint meter to the window',
@@ -25,7 +25,7 @@ RegisterNetEvent('tintmeter:useItem', function()
         }) then
             Citizen.Wait(2000)
             ExecuteCommand("do Device measuring window transparency")
-            
+
             if lib.progressBar({
                 duration = 10000,
                 label = 'Measuring window transparency',
@@ -55,8 +55,12 @@ RegisterNetEvent('tintmeter:useItem', function()
     else 
         lib.notify({
             title = 'Tintmeter',
+			    position = 'center',
             description = 'You are far from the vehicle',
             type = 'error'
         })
     end
-end)
+end
+
+-- Exporting the function
+exports('UseTintMeter', UseTintMeter)
