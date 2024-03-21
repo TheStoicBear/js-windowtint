@@ -9,7 +9,7 @@ Add this to the bottom.
     close = true,   -- Close inventory after use
     description = 'Laser Labs Enforcer II – TM1000',
     client = {
-        export = 'js-windowtint.tintmeter:useItem'
+        export = 'js-windowtint.UseTintMeter'
     }
 }
 ```
